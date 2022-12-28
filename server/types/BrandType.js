@@ -4,7 +4,7 @@ const { GraphQLObjectType, GraphQLID, GraphQLString } = require("graphql");
 const BrandType = new GraphQLObjectType({
   name: "nissans",
   fields: () => ({
-    _id: { type: GraphQLID },
+    id: { type: GraphQLID },
     Brand_name: { type: GraphQLString },
     Logo: { type: GraphQLString },
     IPR: { type: GraphQLString },
