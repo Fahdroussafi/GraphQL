@@ -1,25 +1,12 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import BrandsRow from "./BrandsRow";
-
-const GET_BRANDS = gql`
-  query GetBrands {
-    brands {
-      IPR
-      Brand_name
-      Designation
-      Status
-      Number
-      Office
-      Nice_classification
-      Owner
-    }
-  }
-`;
+import { GET_BRANDS } from "../queries/brandQueries";
+import Spinner from "./Spinner";
 
 export default function Brands() {
   const { loading, error, data } = useQuery(GET_BRANDS);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner />;
   if (error) return <p>Something Went Wrong</p>;
 
   return (
