@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="5" failures="0" errors="0" time="1.684">
+  <testsuite name="GraphQL API" errors="0" failures="0" skipped="0" timestamp="2022-12-28T15:03:26" time="1.547" tests="5">
+    <testcase classname="GraphQL API should get brand name" name="GraphQL API should get brand name" time="0.312">
+    </testcase>
+    <testcase classname="GraphQL API should get status as an enum type" name="GraphQL API should get status as an enum type" time="0.33">
+    </testcase>
+    <testcase classname="GraphQL API should add a new brand" name="GraphQL API should add a new brand" time="0.066">
+    </testcase>
+    <testcase classname="GraphQL API should update a brand" name="GraphQL API should update a brand" time="0.052">
+    </testcase>
+    <testcase classname="GraphQL API should delete a brand" name="GraphQL API should delete a brand" time="0.08">
+    </testcase>
+  </testsuite>
+</testsuites>
