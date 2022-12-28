@@ -13,19 +13,6 @@ const {
   GraphQLEnumType,
 } = require("graphql");
 
-// Status Enum
-const StatusEnum = new GraphQLEnumType({
-  name: "Status",
-  values: {
-    REGISTERED: { value: "Registered" },
-    PENDING: { value: "Pending" },
-    EXPIRED: { value: "Expired" },
-  },
-});
-
-// non-null string
-const nonNullIntType = new GraphQLNonNull(GraphQLString, GraphQLID);
-
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
@@ -53,16 +40,26 @@ const mutation = new GraphQLObjectType({
     addBrand: {
       type: BrandType,
       args: {
-        Brand_name: { type: nonNullIntType },
-        Logo: { type: nonNullIntType },
-        IPR: { type: nonNullIntType },
-        Designation: { type: nonNullIntType },
-        Status: { type: nonNullIntType, enum: StatusEnum },
-        Status_date: { type: nonNullIntType },
-        Number: { type: nonNullIntType },
-        Office: { type: nonNullIntType },
-        Nice_classification: { type: nonNullIntType },
-        Owner: { type: nonNullIntType },
+        Brand_name: { type: new GraphQLNonNull(GraphQLString) },
+        Logo: { type: new GraphQLNonNull(GraphQLString) },
+        IPR: { type: new GraphQLNonNull(GraphQLString) },
+        Designation: { type: new GraphQLNonNull(GraphQLString) },
+        Status: {
+          type: new GraphQLEnumType({
+            name: "ProjectStatus",
+            values: {
+              new: { value: "Registered" },
+              progress: { value: "Pending" },
+              completed: { value: "Expired" },
+            },
+          }),
+          defaultValue: "Not Started",
+        },
+        Status_date: { type: new GraphQLNonNull(GraphQLString) },
+        Number: { type: new GraphQLNonNull(GraphQLString) },
+        Office: { type: new GraphQLNonNull(GraphQLString) },
+        Nice_classification: { type: new GraphQLNonNull(GraphQLString) },
+        Owner: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
         const brand = new Brand({
@@ -83,26 +80,37 @@ const mutation = new GraphQLObjectType({
     // delete Brand
     deleteBrand: {
       type: BrandType,
-      args: { id: { type: nonNullIntType } },
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
       resolve(parent, args) {
-        return Brand.findByIdAndDelete(args.id);
+        return Brand.findByIdAndRemove(args.id);
       },
     },
     // update Brand
     updateBrand: {
       type: BrandType,
       args: {
-        id: { type: GraphQLID },
-        Brand_name: { type: nonNullIntType },
-        Logo: { type: nonNullIntType },
-        IPR: { type: nonNullIntType },
-        Designation: { type: nonNullIntType },
-        Status: { type: nonNullIntType, enum: StatusEnum },
-        Status_date: { type: nonNullIntType },
-        Number: { type: nonNullIntType },
-        Office: { type: nonNullIntType },
-        Nice_classification: { type: nonNullIntType },
-        Owner: { type: nonNullIntType },
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        Brand_name: { type: new GraphQLNonNull(GraphQLString) },
+        Logo: { type: new GraphQLNonNull(GraphQLString) },
+        IPR: { type: new GraphQLNonNull(GraphQLString) },
+        Designation: { type: new GraphQLNonNull(GraphQLString) },
+        Status: {
+          type: new GraphQLEnumType({
+            name: "ProjectStatusUpdate",
+            values: {
+              new: { value: "Registered" },
+              progress: { value: "Pending" },
+              completed: { value: "Expired" },
+            },
+          }),
+        },
+        Status_date: { type: new GraphQLNonNull(GraphQLString) },
+        Number: { type: new GraphQLNonNull(GraphQLString) },
+        Office: { type: new GraphQLNonNull(GraphQLString) },
+        Nice_classification: { type: new GraphQLNonNull(GraphQLString) },
+        Owner: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
         return Brand.findByIdAndUpdate(
